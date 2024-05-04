@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { getTaskById } from '../hooks/getTaskById';
+import Navigation from './Navigation';
 
 const ViewTask = () => {
     
@@ -17,6 +18,8 @@ const ViewTask = () => {
     }
 
  return (
+    <>
+    <Navigation />
     <div style={{color: "white"}}>
         <form onSubmit={viewTask} >
             <label 
@@ -27,6 +30,7 @@ const ViewTask = () => {
             <button style={{backgroundColor: "black", textAlign: "center", color: "white", width: "100px", borderRadius: "999px"}} type='submit'>View Task</button>
         </form>
     </div>
+    </>
   )
 }
 

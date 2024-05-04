@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import Navigation from "./Navigation"
+import { taskCreated } from "../hooks/createTask";
 
 const CreateTask = ({state}) => {
 
@@ -14,20 +15,31 @@ const CreateTask = ({state}) => {
     })
 
     const handleInputChange = (refName) => {
-
         return (e) => {
             const value = e.target.value;
             setInputValues({
                 ...inputValues,
             [refName]: value
         })
-    }
-    }
+    }}
 
     const createTask = async (e) => {
         e.preventDefault();
         const {contract, accounts} = state;
-        
+        console.log(inputValues.taskDate);
+        const data = await taskCreated(inputValues.taskDate);
+        console.log(accounts);
+        console.log(contract);
+
+        if(data.success){
+          if(contract && inputValues.taskName && inputValues.taskDate){
+            const transaction = await contract.creatTask(inputValues.taskName, inputValues.taskDate);
+            // This line waits for the transaction to be mined and confirmed on the Ethereum network. 
+            await transaction.wait();
+          }
+        }else{
+          alert("Task cannot be added");
+        }
     }
 
   return (
@@ -41,7 +53,7 @@ const CreateTask = ({state}) => {
         </label>
         <label>
           Date:
-          <input id="taskDate" type="date" ref={inputRefs.taskDate} value={inputValues.taskName} onChange={handleInputChange("taskDate")}/>
+          <input id="taskDate" ref={inputRefs.taskDate} value={inputValues.taskDate} onChange={handleInputChange("taskDate")}/>
         </label>
         <button type="submit">Create Task</button>
       </form>

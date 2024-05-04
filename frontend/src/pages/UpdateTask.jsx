@@ -1,8 +1,11 @@
-import React from 'react'
+import Navigation from './Navigation'
 
 const UpdateTask = () => {
   return (
-    <div>UpdateTask</div>
+    <>
+    <Navigation />
+
+    </>
   )
 }
 

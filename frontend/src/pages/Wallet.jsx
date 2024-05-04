@@ -16,13 +16,14 @@ const Wallet = ({saveState}) => {
                 });
                 // await provider.send("eth_requestAccounts", []);   // Through this line Metamask will open automatically
 
-                const signer = provider.getSigner();
+                const signer = await provider.getSigner();
                 const contractAddress = import.meta.env.VITE_CONTRACT_ADDRESS;
                 const contract = new ethers.Contract(contractAddress, ABI, signer);  // Instance of our contract.
                 saveState({web3: provider, contract, accounts: accounts[0]});
                 navigateTo("/view-all-tasks");
 
             }else{
+                alert("Please Install Metamask Wallet");
                 throw new Error("Please Install Metamask Wallet");
             }
 

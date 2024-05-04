@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { allTask } from '../hooks/getAllTask';
+import Navigation from './Navigation';
 
 const ViewAllTask = () => {
   
@@ -7,6 +8,7 @@ const ViewAllTask = () => {
   
   const fetechAllTask = async () => {
     const data = await allTask();
+    console.log(data);
     if(data.success){
         setTaskList(data.data);
     }
@@ -19,6 +21,8 @@ const ViewAllTask = () => {
 
   return (
     <div>
+    <Navigation />
+
         <div style={{color: "white"}}>
             {taskList.length > 0 && (
                 taskList.map((val, i) => (
