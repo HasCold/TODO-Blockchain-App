@@ -26,16 +26,19 @@ const CreateTask = ({state}) => {
     const createTask = async (e) => {
         e.preventDefault();
         const {contract, accounts} = state;
-        console.log(inputValues.taskDate);
         const data = await taskCreated(inputValues.taskDate);
-        console.log(accounts);
-        console.log(contract);
+        console.log("Account :- ", accounts);
+        console.log("Contract :- ", contract);
 
         if(data.success){
           if(contract && inputValues.taskName && inputValues.taskDate){
             const transaction = await contract.creatTask(inputValues.taskName, inputValues.taskDate);
             // This line waits for the transaction to be mined and confirmed on the Ethereum network. 
             await transaction.wait();
+            setInputValues({
+              taskName: "",
+              taskDate: ""
+            });
           }
         }else{
           alert("Task cannot be added");
